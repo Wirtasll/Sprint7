@@ -1,14 +1,9 @@
-import io.restassured.RestAssured;
-import org.junit.Before;
 import org.junit.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
-public class LoginCourierTest {
 
-    @Before
-    public void setUp() {
-        RestAssured.baseURI= "https://qa-scooter.praktikum-services.ru/";
-    }
+public class LoginCourierTest extends BaseTest{
+
 
     @Test
     public void authenticationCourier () {
@@ -19,7 +14,7 @@ public class LoginCourierTest {
                         "    \"login\": \"iadzvnn\",\n" +
                         "    \"password\": \"1234\"\n" +
                         "}")
-                .post("api/v1/courier/login")
+                .post("/api/v1/courier/login")
                 .then()
                 .assertThat()
                 .statusCode(200).body("id", is(378207));
@@ -33,7 +28,7 @@ public class LoginCourierTest {
                         "    \"login\": \"iadzvnn\",\n" +
                         "    \"password\": \"1231\"\n" +
                         "}")
-                .post("api/v1/courier/login")
+                .post("/api/v1/courier/login")
                 .then()
                 .assertThat()
                 .statusCode(404).body("message", is("Учетная запись не найдена"));
@@ -46,7 +41,7 @@ public class LoginCourierTest {
                 .body("{\n" +
                         "    \"password\": \"1234\"\n" +
                         "}")
-                .post("api/v1/courier/login")
+                .post("/api/v1/courier/login")
                 .then()
                 .assertThat()
                 .statusCode(400).body("message", is("Недостаточно данных для входа"));
@@ -60,7 +55,7 @@ public class LoginCourierTest {
                         "    \"login\": \"iazzzzvnn\",\n" +
                         "    \"password\": \"1234\"\n" +
                         "}")
-                .post("api/v1/courier/login")
+                .post("/api/v1/courier/login")
                 .then()
                 .assertThat()
                 .statusCode(404).body("message", is("Учетная запись не найдена"));
